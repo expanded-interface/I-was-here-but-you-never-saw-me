@@ -1,0 +1,23 @@
+# Nombre del proyecto
+
+## Qué es
+Breve descripción (qué problema explora o resuelve).
+
+## Por qué existe
+Contexto, motivación, o marco conceptual (clave para proyectos artísticos o de investigación).
+
+## Qué contiene
+- `/src` → código
+- `/docs` → documentación
+- `/assets` → imágenes, diagramas, etc.
+
+## Cómo usarlo
+Pasos básicos para correrlo o explorarlo.
+
+## Estado del proyecto
+🟡 en progreso / 🟢 estable / 🔴 experimental
+
+## Créditos / Referencias
+(si aplica)
+
+## Licencia
