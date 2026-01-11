@@ -93,8 +93,8 @@ function createThoughtForm(x, y, container, showText = true) {
     form.classList.add(selectedType);
             
             // Responsive size based on screen width
-            const maxSize = window.innerWidth < 768 ? 60 : 70;
-            const minSize = window.innerWidth < 768 ? 60 : 70;
+            const maxSize = window.innerWidth < 768 ? 15 : 80;
+            const minSize = window.innerWidth < 768 ? 10 : 70;
             const size = minSize + Math.random() * (maxSize - minSize);
             
             form.style.width = size + 'px';
