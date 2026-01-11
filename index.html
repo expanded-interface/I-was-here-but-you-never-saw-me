@@ -6,24 +6,22 @@
     <title>Comunicación Liminal</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌀</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="left-panel" id="leftPanel"></div>
-        <div class="right-panel" id="rightPanel"></div>
+   <button class="capture-btn" id="captureBtn">CAPTURAR</button>
+    
+    <div class="container" id="mainContainer">
+        <div class="portal"></div>
     </div>
     
     <div class="instructions" id="instructions">
-        Navega el espacio liminal. Mantén presionado para explorar lo invisible.
+        Move through the liminal space. Click to materialize thought forms. Hold to glimpse the invisible.
     </div>
 
-    <button class="download-btn" id="downloadBtn" aria-label="Capturar comunicación">
-        <span class="btn-text">Capturar comunicación</span>
-        <span class="btn-icon">📸</span>
-    </button>
-    
-    <div class="capture-overlay" id="captureOverlay"></div>
-
     <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 </html>

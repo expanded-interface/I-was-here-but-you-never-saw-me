@@ -5,8 +5,8 @@
         }
 
         body {
-            font-family: 'Times New Roman', Times, serif;
-            background: linear-gradient(135deg, #e8e6e3 0%, #d4d2d0 50%, #cdcbc9 100%);
+            font-family: 'Atkinson Hyperlegible Mono', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #282828 50%, #0e0e0e 100%);
             height: 100vh;
             overflow: hidden;
             cursor: crosshair;
@@ -16,13 +16,6 @@
             position: relative;
             width: 100%;
             height: 100%;
-            display: flex;
-        }
-
-        .left-panel, .right-panel {
-            width: 50%;
-            height: 100%;
-            position: relative;
         }
 
         .thought-form {
@@ -32,6 +25,7 @@
             transition: all 0.8s ease-in-out;
             cursor: pointer;
             filter: blur(1px);
+            backdrop-filter: blur(2px); /* ← Efecto adicional */
         }
 
         .thought-form.visible {
@@ -41,15 +35,11 @@
         .thought-form.focused {
             opacity: 1;
             filter: blur(0px);
-            transform: scale(2.5);
+            transform: scale(3.2);
         }
 
         .pink-form {
-            background: radial-gradient(circle, rgba(255, 182, 193, 0.8) 0%, rgba(255, 105, 134, 0.6) 40%, transparent 70%);
-        }
-
-        .green-form {
-            background: radial-gradient(circle, rgba(182, 255, 208, 0.8) 0%, rgba(154, 255, 136, 0.6) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 156, 202, 0.8) 0%, rgba(255, 114, 171, 0.766) 40%, transparent 70%);
         }
 
         .white-form {
@@ -60,20 +50,55 @@
             background: radial-gradient(circle, rgba(169, 169, 169, 0.8) 0%, rgba(128, 128, 128, 0.6) 40%, transparent 70%);
         }
 
+        .lavender-form {
+            background: radial-gradient(circle, rgba(244, 186, 244, 0.986) 0%, rgba(221, 160, 241, 0.715) 40%, transparent 70%);
+        }
+
+        .green-form {
+            background: radial-gradient(circle, rgba(192, 255, 167, 0.957) 0%, rgba(205, 255, 140, 0.91) 40%, transparent 70%);
+        }
+        
+        .peach-form {
+            background: radial-gradient(circle, rgba(248, 191, 126, 0.957) 0%, rgba(255, 177, 124, 0.91) 40%, transparent 70%);
+        }
+
+        .blue-form {
+            background: radial-gradient(circle, rgba(173, 216, 230, 0.8) 0%, rgba(135, 180, 210, 0.6) 40%, transparent 70%);
+        }
+
         .text-fragment {
             position: absolute;
-            color: rgba(80, 80, 80, 0.8);
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.5s ease-in-out;
             pointer-events: none;
             text-align: center;
-            width: 200px;
-            margin-left: -100px;
+            width: 300px;
+            margin-left: -150px;
+            background-color: rgba(0, 0, 0, 0.396); /* ← AÑADE ESTA LÍNEA */
+            padding: 8px 8px; /* ← Añade padding para que el fondo se vea bien */
         }
 
         .text-fragment.visible {
             opacity: 1;
+        }
+
+        .portal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5), transparent);
+            opacity: 0;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0; width: 2px; }
+            50% { opacity: 0; width: 4px; }
         }
 
         .vortex {
@@ -105,44 +130,96 @@
             font-size: 12px;
             text-align: center;
             opacity: 1;
-            transition: opacity 2s ease-in-out;
+            transition: opacity 5s ease-in-out;
         }
 
         .instructions.hidden {
             opacity: 0;
         }
 
-        .download-btn {
+        .capture-btn {
+            z-index: 1000; /* Asegúrate de que sea alto */
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgba(80, 80, 80, 0.9);
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 11px;
-            padding: 10px 16px;
-            border-radius: 25px;
+            padding: 12px 24px;
+            background: rgba(21, 21, 21, 0.454);
+            border: 0.1px solid rgba(205, 205, 205, 0.039);
+            border-radius: 5px;
+            color: rgba(200, 200, 200, 0.9);
+            font-family: 'Atkinson Hyperlegible Mono', sans-serif;
+            font-size: 13px;
             cursor: pointer;
-            opacity: 0.8;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .download-btn:hover {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 182, 193, 0.5);
-            color: rgba(60, 60, 60, 1);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        .capture-btn:hover {
+            background: rgba(23, 23, 23, 0.5);
+            transform: scale(1.05);
         }
 
-        .download-btn:active {
-            transform: translateY(0px);
-            background: rgba(255, 182, 193, 0.2);
+        .capture-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .capture-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+
+            .text-fragment {
+                font-size: 12px;
+                width: 150px;
+                margin-left: -75px;
+            }
+
+            .instructions {
+                font-size: 11px;
+                padding: 0 20px;
+                bottom: 15px;
+            }
+
+            .thought-form {
+                max-width: 60px;
+                max-height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .capture-btn {
+                padding: 8px 15px;
+                font-size: 11px;
+            }
+
+            .text-fragment {
+                font-size: 11px;
+                width: 120px;
+                margin-left: -60px;
+            }
+
+            .instructions {
+                font-size: 10px;
+                bottom: 10px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            .instructions {
+                bottom: 5px;
+                font-size: 10px;
+            }
+
+            .capture-btn {
+                top: 5px;
+                right: 5px;
+                padding: 6px 12px;
+                font-size: 10px;
+            }
         }
 
         .memory-trace {
@@ -164,21 +241,4 @@
                 opacity: 0; 
                 transform: scale(10);
             }
-        }
-
-        .capture-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9999;
-            transition: opacity 0.2s ease;
-        }
-
-        .capture-overlay.active {
-            opacity: 1;
         }
