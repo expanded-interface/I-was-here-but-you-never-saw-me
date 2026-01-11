@@ -327,7 +327,7 @@ document.getElementById('captureBtn').addEventListener('click', async function()
             ctx.textAlign = 'right';
             ctx.textBaseline = 'bottom';
             const timestamp = new Date().toLocaleString('es-ES');
-            ctx.fillText(`Comunicación Liminal - ${timestamp}`, 
+            ctx.fillText(`I am here and you can see me - ${timestamp}`, 
                          canvas.width - 20 * 2, // Ajustar por escala
                          canvas.height - 20 * 2);
             

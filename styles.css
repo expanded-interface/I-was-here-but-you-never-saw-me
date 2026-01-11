@@ -148,7 +148,7 @@
             border-radius: 5px;
             color: rgba(48, 48, 48, 0.9);
             font-family: 'Atkinson Hyperlegible Mono', sans-serif;
-            font-size: 13px;
+            font-size: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
