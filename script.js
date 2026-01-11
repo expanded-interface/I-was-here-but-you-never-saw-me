@@ -245,8 +245,6 @@ function createThoughtForm(x, y, container, showText = true) {
         }, 5000);
 
         // Capture button functionality
-        
-// Reemplaza la función de captura desde la línea del botón "captureBtn"
 document.getElementById('captureBtn').addEventListener('click', async function() {
     if (isCapturing) return;
     
@@ -254,11 +252,11 @@ document.getElementById('captureBtn').addEventListener('click', async function()
     const btn = this;
     const originalText = btn.textContent;
     
-    // Efecto visual de captura
+    // Efecto visual
     btn.textContent = 'Capturando...';
     btn.disabled = true;
     
-    // Crear overlay temporal para efecto visual
+    // Crear overlay temporal
     const overlay = document.createElement('div');
     overlay.style.cssText = `
         position: fixed;
@@ -266,8 +264,8 @@ document.getElementById('captureBtn').addEventListener('click', async function()
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(2px);
+        background: rgba(207, 207, 207, 0.1);
+        backdrop-filter: blur(5px);
         z-index: 9998;
         opacity: 0;
         transition: opacity 0.3s;
@@ -276,109 +274,130 @@ document.getElementById('captureBtn').addEventListener('click', async function()
     
     setTimeout(() => overlay.style.opacity = '1', 10);
     
-    // Usar html2canvas para capturar exactamente lo que se ve
-    setTimeout(async () => {
-        // Importar html2canvas dinámicamente si no está disponible
-        if (typeof html2canvas === 'undefined') {
-            // Cargar html2canvas desde CDN
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
-            document.head.appendChild(script);
-            
-            // Esperar a que cargue
-            await new Promise(resolve => {
-                script.onload = resolve;
-            });
-        }
-        
-        try {
-            // Capturar el contenedor principal
-            const container = document.getElementById('mainContainer');
-            
-            // Opciones para html2canvas
-            const options = {
-                scale: 2, // Alta resolución
-                backgroundColor: null, // Fondo transparente
-                useCORS: true,
-                allowTaint: true,
-                logging: false,
-                onclone: function(clonedDoc) {
-                    // Asegurar que todos los elementos visibles se mantengan
-                    const clonedContainer = clonedDoc.getElementById('mainContainer');
-                    if (clonedContainer) {
-                        // Forzar visibilidad de elementos
-                        const forms = clonedContainer.querySelectorAll('.thought-form.visible');
-                        forms.forEach(form => {
-                            form.style.opacity = '0.7';
-                        });
-                    }
-                }
-            };
-            
-            // Capturar el contenido
-            const canvas = await html2canvas(container, options);
-            
-            // Añadir información adicional
-            const ctx = canvas.getContext('2d');
-            
-            // Añadir marca de tiempo y firma
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.font = '12px Times New Roman';
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'bottom';
-            const timestamp = new Date().toLocaleString('es-ES');
-            ctx.fillText(`I am here and you can see me - ${timestamp}`, 
-                         canvas.width - 20 * 2, // Ajustar por escala
-                         canvas.height - 20 * 2);
-            
-            // Añadir contador de formas
-            const activeForms = document.querySelectorAll('.thought-form.visible').length;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            ctx.textAlign = 'left';
-            ctx.fillText(`Formas creadas: ${activeForms}`, 20 * 2, canvas.height - 20 * 2);
-            
-            // Convertir a blob y descargar
-            canvas.toBlob(blob => {
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                const timestamp = new Date().toISOString().slice(0, 19).replace(/[T:]/g, '-');
-                link.download = `thought-forms-${timestamp}.png`;
-                link.href = url;
-                link.style.display = 'none';
+    try {
+        // Opciones SIMPLIFICADAS para html2canvas
+        const options = {
+            scale: 2,
+            backgroundColor: '#ffffff', // FONDO BLANCO ASEGURADO
+            useCORS: true,
+            allowTaint: false,
+            logging: false,
+            removeContainer: true,
+            // La clave: Añadir el timestamp DURANTE la clonación
+            onclone: function(clonedDoc) {
+                // Crear div para el timestamp
+                const timestampDiv = clonedDoc.createElement('div');
+                const now = new Date();
+                const timestamp = now.toLocaleString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
                 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                const activeForms = clonedDoc.querySelectorAll('.thought-form.visible').length;
                 
-                URL.revokeObjectURL(url);
+                // Estilos del timestamp - VISIBLE y LEGIBLE
+                timestampDiv.style.cssText = `
+                    position: absolute;
+                    bottom: 15px;
+                    right: 15px;
+                    color: #505050;
+                    font-family: 'Atkinson Hyperlegible Mono', monospace;
+                    font-size: 11px;
+                    font-weight: 500;
+                    text-align: right;
+                    z-index: 10000;
+                    background: rgba(255, 255, 255, 0.85);
+                    padding: 6px 10px;
+                    border-radius: 4px;
+                    border: 0.5px solid rgba(200, 200, 200, 0.5);
+                    backdrop-filter: blur(2px);
+                    line-height: 1.4;
+                `;
                 
-                // Restaurar UI
-                setTimeout(() => {
-                    overlay.style.opacity = '0';
-                    setTimeout(() => {
-                        if (overlay.parentElement) {
-                            document.body.removeChild(overlay);
-                        }
-                    }, 300);
+                timestampDiv.innerHTML = `
+                    I am here and you can see me<br>
+                    ${timestamp}<br>
+                    Recuerdos revelados: ${activeForms}/30
+                `;
+                
+                // Añadir al contenedor principal
+                const container = clonedDoc.getElementById('mainContainer');
+                if (container) {
+                    container.appendChild(timestampDiv);
                     
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                    isCapturing = false;
-                }, 300);
-            }, 'image/png', 0.95);
-            
-        } catch (error) {
-            console.error('Error capturando:', error);
-            // Restaurar UI en caso de error
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                if (overlay.parentElement) {
-                    document.body.removeChild(overlay);
+                    // Asegurar que los elementos sean visibles
+                    const forms = container.querySelectorAll('.thought-form');
+                    forms.forEach(form => {
+                        if (form.classList.contains('visible')) {
+                            form.style.opacity = '0.7';
+                        }
+                    });
                 }
-                btn.textContent = originalText;
+            }
+        };
+        
+        // Capturar el CONTENEDOR PRINCIPAL (no el body)
+        const container = document.getElementById('mainContainer');
+        
+        // Pequeña pausa para que se renderice el overlay
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Capturar con html2canvas
+        const canvas = await html2canvas(container, options);
+        
+        // Convertir a blob y descargar
+        canvas.toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const timestamp = new Date().toISOString()
+                .slice(0, 19)
+                .replace(/[T:]/g, '-')
+                .replace('T', '-');
+            
+            link.download = `thought-forms-${timestamp}.png`;
+            link.href = url;
+            link.style.display = 'none';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            URL.revokeObjectURL(url);
+            
+            // Restaurar UI
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    if (overlay.parentElement) {
+                        document.body.removeChild(overlay);
+                    }
+                }, 300);
+                
+                btn.textContent = 'Capturar';
                 btn.disabled = false;
                 isCapturing = false;
-            }, 300);
+            }, 500);
+            
+        }, 'image/png', 0.95);
+        
+    } catch (error) {
+        console.error('Error en captura:', error);
+        
+        // Restaurar UI en caso de error
+        if (overlay.parentElement) {
+            overlay.style.opacity = '0';
+            setTimeout(() => document.body.removeChild(overlay), 300);
         }
-    }, 200);
+        
+        btn.textContent = 'Error - Intentar de nuevo';
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.disabled = false;
+            isCapturing = false;
+        }, 2000);
+    }
 });
