@@ -1,25 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(() => {
-        const message =
-            "   COMUNICACIÓN LIMINAL\n" +
-            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-            "Interacción:\n" +
-            "  • Clic → Formas\n" +
-            "  • Clic largo → Oculto\n" +
-            "  • Clic formas → Vórtices\n" +
-            "  • Movimiento → Rastros\n" +
-            "  • Capturar → Imagen\n\n" +
-            "Concepto:\n" +
-            "  \"El tiempo no avanza:\n" +
-            "   se entreteje.\"\n\n" +
-            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
-            "       [  OK para comenzar  ]";
-        
-        alert(message);
-    }, 700);
-});
-
-
 
 
 let thoughtForms = [];
@@ -93,8 +71,8 @@ function createThoughtForm(x, y, container, showText = true) {
     form.classList.add(selectedType);
             
             // Responsive size based on screen width
-            const maxSize = window.innerWidth < 768 ? 15 : 80;
-            const minSize = window.innerWidth < 768 ? 10 : 70;
+            const maxSize = window.innerWidth < 768 ? 100 : 120;
+            const minSize = window.innerWidth < 768 ? 10 : 20;
             const size = minSize + Math.random() * (maxSize - minSize);
             
             form.style.width = size + 'px';

@@ -35,7 +35,7 @@
         .thought-form.focused {
             opacity: 1;
             filter: blur(0px);
-            transform: scale(3.2);
+            transform: scale(0.5);
         }
 
         .pink-form {
@@ -105,7 +105,7 @@
             position: absolute;
             width: 100px;
             height: 100px;
-            border: 2px solid rgba(255, 182, 193, 0.4);
+            border: 1px solid rgba(255, 246, 247, 0.4);
             border-radius: 50%;
             animation: rotate 20s linear infinite;
             opacity: 0;
